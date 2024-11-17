@@ -36,7 +36,7 @@ validate $? mysqlenabling
 systemctl start mysqld
 validate $? mysqlsystemstart
 
-mysql -h 172.31.23.2 -u root -pExpenseApp@1 -e 'show databases;'
+mysql -h 172.31.16.250 -u root -pExpenseApp@1 -e 'show databases;'
 if [ $? -ne 0 ]
 then 
    echo " Root password setting up now... " | tee -a $logfile
