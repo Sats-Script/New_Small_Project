@@ -11,7 +11,7 @@ checkroot(){
        if [ $uid -ne 0 ]
        then 
           echo "Run as Administrator"
-          exit 2
+          exit 1
        fi
 }
 
