@@ -34,8 +34,15 @@ dnf module disable nodejs -y
 dnf module enable nodejs:20 -y 
 dnf install nodejs -y
 validate $? "Nodejs:20 installation"
-useradd expense   |tee -a $logfile
-validate $? "expense user creation"
+id expense
+if [ $? -ne 0 ]
+then 
+   echo "Expense user creatin"
+   useradd expense   |tee -a $logfile
+   validate $? "expense user creation"
+else
+   echo " User already exists "
+fi
 mkdir -p /app
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
 validate $? "downloading app files"
@@ -45,8 +52,16 @@ unzip /tmp/backend.zip
 validate $? "unzipping app files"
 npm install
 validate $? "nodejs dependencies file"
-systemctl enable backend
-validate $? "backend service enabling"
-systemctl start backend
-validate $? "starting backend service"
+cp /home/ec2-user/New_small_project/backend.service  etc/systemd/system/backend.service
+dnf install mysql -y
+validate $? "Installing Mysql "
+mysql -h mysql.daws81s.online -uroot -pExpenseApp@1   #< /app/schema/backend.sql &>>$LOG_FILE
+VALIDATE $? "Schema loading"
+systemctl daemon-reload &>>$LOG_FILE
+VALIDATE $? "Daemon reload"
 
+systemctl enable backend &>>$LOG_FILE
+VALIDATE $? "Enabled backend"
+
+systemctl restart backend &>>$LOG_FILE
+VALIDATE $? "Restarted Backend"
