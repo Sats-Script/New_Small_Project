@@ -55,7 +55,7 @@ validate $? "nodejs dependencies file"
 cp /home/ec2-user/New_Small_Project/backend.service  /etc/systemd/system/backend.service
 dnf install mysql -y
 validate $? "Installing Mysql "
-mysql -h 172.31.32.232 -u root -pExpenseApp@1   #< /app/schema/backend.sql &>>$LOG_FILE
+mysql -h 172.31.32.232 -u root -pExpenseApp@1   < /app/schema/backend.sql &>>$LOG_FILE
 VALIDATE $? "Schema loading"
 systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "Daemon reload"
