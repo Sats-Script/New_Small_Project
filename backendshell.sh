@@ -40,7 +40,7 @@ mkdir -p /app
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
 validate $? "downloading app files"
 cd /app
-rm -rf /ap/*
+rm -rf /app/*
 unzip /tmp/backend.zip
 validate $? "unzipping app files"
 npm install
