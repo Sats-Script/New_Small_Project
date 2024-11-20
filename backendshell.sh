@@ -52,7 +52,7 @@ unzip /tmp/backend.zip
 validate $? "unzipping app files"
 npm install
 validate $? "nodejs dependencies file"
-cp /home/ec2-user/New_small_project/backend.service  etc/systemd/system/backend.service
+cp /home/ec2-user/New_small_Project/backend.service  etc/systemd/system/backend.service
 dnf install mysql -y
 validate $? "Installing Mysql "
 mysql -h mysql.daws81s.online -uroot -pExpenseApp@1   #< /app/schema/backend.sql &>>$LOG_FILE
